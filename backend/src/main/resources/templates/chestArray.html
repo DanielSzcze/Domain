@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chest Array</title>
+    <script src="/js/jquery-3.6.0.js" type="text/javascript"></script>
+</head>
+    <body>
+        <div id="chest-array">
+            <tr th:each="champion, index: ${championsNames}">
+                <td>
+                    <button type="button" th:id="${champion.getNumber()}" onclick="changeValue(this.id)" style="background-color: green">
+                        <p th:text="${champion.name()}"><br/></p>
+                        <img th:src="${champion.getChampionIcon()}">
+                    </button>
+                </td>
+            </tr>
+        </div>
+        <script src="/js/script.js" type="text/javascript"></script>
+    </body>
+</html>
