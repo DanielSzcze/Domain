@@ -71,7 +71,7 @@ public class LolAppController {
     }
 
     @GetMapping("/getdata/{username}")
-    public Object getData(@PathVariable(name = "username") String username) throws ParseException {
+    public Object getData(@PathVariable(name = "username") String username) {
         String[] chestArrayByUsername = accountService.getChestArrayByUsername(username);
         System.out.println(Arrays.toString(chestArrayByUsername));
         return chestArrayByUsername;

@@ -30,9 +30,6 @@ function changeValue(value) {
         },
         error : function(e) {
             console.log("ERROR: ", e);
-        },
-        done : function(e) {
-            console.log("DONE");
         }
     });
 }
@@ -55,19 +52,3 @@ function getData(username) {
         }
     }
 }
-
-/*function changeStyle(data) {
-    data.forEach(styles);
-
-    function styles(value, index, array) {
-        let ele = document.getElementById(value);
-        console.log('ele: ' + ele);
-        console.log('value: ' + value);
-        console.log('array element: ' + array[index]);
-        if (ele != null) {
-            ele.style.backgroundColor = 'red';
-        } /!*else if (array[index] === '0') {
-            ele.style.backgroundColor = 'white';
-        }*!/
-    }
-}*/
