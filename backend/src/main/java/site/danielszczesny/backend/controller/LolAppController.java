@@ -1,10 +1,10 @@
 package site.danielszczesny.backend.controller;
 
+import lombok.extern.java.Log;
 import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
 import net.minidev.json.parser.ParseException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,11 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 
+@Log
 @RestController
 @RequestMapping("/lolapp")
 public class LolAppController {
-
-    Logger logger = LoggerFactory.getLogger(LolAppController.class.getName());
 
     private AccountService accountService;
 
@@ -49,14 +48,17 @@ public class LolAppController {
         String[] chestArrayByUsername = accountService.getChestArrayByUsername(username);
         model.addObject("chestArrayAcc", Arrays.asList(chestArrayByUsername));
         model.addObject("championsNames", Champions.values());
+        log.info("Get lolapp/" + username);
         return model;
     }
 
     private boolean userExist(String username) {
         if (accountService.usernameExist(username)) {
+            log.info("User exist");
             return true;
         } else {
             accountService.save(username);
+            log.warning("User not exist");
             return userExist(username);
         }
     }
@@ -70,7 +72,7 @@ public class LolAppController {
         String username = (String) parse.get("username");
         int id = Integer.parseInt(String.valueOf(parse.get("id")));
 
-        System.out.println(json);
+        log.info("User " + username + " change value for champion id: " + id);
         return accountService.changeChestState(username, id);
     }
 

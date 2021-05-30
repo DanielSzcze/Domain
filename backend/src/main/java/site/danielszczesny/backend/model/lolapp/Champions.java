@@ -1,6 +1,7 @@
 package site.danielszczesny.backend.model.lolapp;
 
 //rev.1 - 26.04.2021 - 154 champions
+//rev.2 - 31.05.2021 - 155 champions
 
 public enum Champions {
 
@@ -41,6 +42,7 @@ public enum Champions {
     GNAR(35),
     GRAGAS(36),
     GRAVES(37),
+    GWEN(150),/*TODO*/
     HECARIM(38),
     HEIMERDINGER(39),
     ILLAOI(40),
@@ -139,6 +141,7 @@ public enum Champions {
     VEIGAR(130),
     VEL_KOZ(131),
     VI(132),
+    VIEGO(155),/*TODO*/
     VIKTOR(133),
     VLADIMIR(134),
     VOLIBEAR(135),
@@ -156,8 +159,7 @@ public enum Champions {
     ZIGGS(146),
     ZILEAN(147),
     ZOE(148),
-    ZYRA(149),
-    GWEN(150);/*TODO*/
+    ZYRA(149);
 
     private final Champion champion;
 
