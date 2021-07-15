@@ -2,8 +2,11 @@ package site.danielszczesny.backend.model;
 
 import org.springframework.stereotype.Component;
 import site.danielszczesny.backend.model.lolapp.ChestArray;
+import site.danielszczesny.backend.model.timofinance.Record;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Component
@@ -20,9 +23,12 @@ public class Account {
     @Column(name = "chestArray", length = 1000)
     private String chestArray;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Record> records = new HashSet<>();
+
     public Account(){
         this.chestArray = createChestArray("");
-    };
+    }
 
     public Account(Long id, String username, String chestArray) {
         this.id = id;
@@ -60,5 +66,13 @@ public class Account {
 
     public void setChestArray(String chestArray) {
         this.chestArray = chestArray;
+    }
+
+    public Set<Record> getRecords() {
+        return records;
+    }
+
+    public void setRecords(Set<Record> records) {
+        this.records = records;
     }
 }
