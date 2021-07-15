@@ -5,6 +5,5 @@ public enum IncomeType {
     OVERTIME,
     INVESTMENTS,
     LOAN,
-    CREDIT,
     OTHER
 }

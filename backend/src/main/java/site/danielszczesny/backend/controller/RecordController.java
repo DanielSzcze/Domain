@@ -1,10 +1,16 @@
 package site.danielszczesny.backend.controller;
 
+import lombok.extern.java.Log;
+import net.minidev.json.JSONObject;
+import net.minidev.json.parser.JSONParser;
+import net.minidev.json.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import site.danielszczesny.backend.model.Account;
 import site.danielszczesny.backend.model.lolapp.Champions;
+import site.danielszczesny.backend.model.timofinance.ChargeType;
+import site.danielszczesny.backend.model.timofinance.IncomeType;
 import site.danielszczesny.backend.model.timofinance.Record;
 import site.danielszczesny.backend.service.RecordService;
 
@@ -13,6 +19,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Set;
 
+@Log
 @RestController
 @RequestMapping("/tf")
 public class RecordController {
@@ -46,5 +53,25 @@ public class RecordController {
 
     private boolean userExist(String username) {
         return recordService.getAccountByUsername(username) != null;
+    }
+
+    @GetMapping("/getIncomeTypes")
+    public String getTypes() {
+        log.info("getIncomeTypes");
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("{\"IncomeTypes\": [");
+        for (IncomeType type: IncomeType.values()) {
+            stringBuilder.append("\"").append(type.toString()).append("\",");
+        }
+        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        stringBuilder.append("],\"ChargeTypes\": [");
+        for (ChargeType type: ChargeType.values()) {
+            stringBuilder.append("\"").append(type.toString()).append("\",");
+        }
+        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        stringBuilder.append("]}");
+
+        return stringBuilder.toString();
     }
 }
