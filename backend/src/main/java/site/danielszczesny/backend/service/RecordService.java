@@ -5,10 +5,9 @@ import org.springframework.stereotype.Service;
 import site.danielszczesny.backend.model.Account;
 import site.danielszczesny.backend.model.timofinance.ChargeType;
 import site.danielszczesny.backend.model.timofinance.IncomeType;
+import site.danielszczesny.backend.model.timofinance.TimePeriods;
 import site.danielszczesny.backend.model.timofinance.Record;
 import site.danielszczesny.backend.repository.RecordRepository;
-
-import java.util.Set;
 
 @Service
 public class RecordService {
@@ -22,34 +21,34 @@ public class RecordService {
         this.accountService = accountService;
     }
 
-    public void save(Account account, boolean type, IncomeType incomeType, ChargeType chargeType, float amount) {
+    public void save(Account account, IncomeType incomeType, float amount, TimePeriods period) {
         Record recordToSave;
-        if (!type) {
-            recordToSave = new Record(type, account.getId(), incomeType, amount);
-        } else {
-            recordToSave = new Record(type, account.getId(), chargeType, amount);
-        }
+
+        recordToSave = new Record(account.getId(), incomeType, amount, period);
+
+        recordRepository.save(recordToSave);
+    }
+
+    public void save(Account account, ChargeType chargeType, float amount, TimePeriods period) {
+        Record recordToSave;
+
+        recordToSave = new Record(account.getId(), chargeType, amount, period);
 
         recordRepository.save(recordToSave);
     }
 
     public long update(long id, Record record) {
         Record toUpdate = recordRepository.getOne(id);
-        if (!record.isType()) {
-            toUpdate.setId(record.getId());
-            toUpdate.setAmount(record.getAmount());
-            toUpdate.setType(record.isType());
-            toUpdate.setIncome(record.getIncome());
-            toUpdate.setCharge(null);
-            toUpdate.setUserId(record.getUserId());
-        } else {
-            toUpdate.setId(record.getId());
-            toUpdate.setAmount(record.getAmount());
-            toUpdate.setType(record.isType());
-            toUpdate.setIncome(null);
-            toUpdate.setCharge(record.getCharge());
-            toUpdate.setUserId(record.getUserId());
-        }
+
+        toUpdate.setCharge(null);
+        toUpdate.setIncome(null);
+        toUpdate.setId(record.getId());
+        toUpdate.setAmount(record.getAmount());
+        toUpdate.setUserId(record.getUserId());
+        toUpdate.setPeriod(record.getPeriod());
+        toUpdate.setIncome(record.getIncome());
+        toUpdate.setCharge(record.getCharge());
+
         recordRepository.save(toUpdate);
         return toUpdate.getId();
     }

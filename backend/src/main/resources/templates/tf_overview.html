@@ -8,12 +8,20 @@
     <body>
 
         <div id="input-form" style="border: black">
-            <form name="add-income-form" method="post">
-                <select name="type" id="type">
-<!--                    script-->
+            <label for="typeSe">
+                <select name="typeSe" id="typeSe">
+                    <!--                    script-->
                 </select>
-                <input type="number" id="amount" placeholder="amount">
-            </form>
+            </label>
+            <label for="amount">
+                <input type="number" id="amount" placeholder="amount" name="amount">
+            </label>
+            <label for="time">
+                <select name="time" id="time">
+                    <!--                    script-->
+                </select>
+            </label>
+            <button type="submit" onclick="createRecord(typeSe.value,amount.value,time.value)">Submit!</button>
         </div>
         <script src="/js/tf_main.js" type="text/javascript"></script>
     </body>

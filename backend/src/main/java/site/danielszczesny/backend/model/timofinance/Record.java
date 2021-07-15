@@ -1,6 +1,7 @@
 package site.danielszczesny.backend.model.timofinance;
 
 import org.springframework.stereotype.Component;
+import site.danielszczesny.backend.model.Account;
 
 import javax.persistence.*;
 
@@ -16,8 +17,6 @@ public class Record {
     @Column
     private long userId;
 
-    @Column
-    private boolean type; //false = income ; true = charge
 
     @Column
     private IncomeType income;
@@ -28,29 +27,34 @@ public class Record {
     @Column(nullable = false, precision = 2)
     private float amount;
 
+    @Column(nullable = false)
+    private TimePeriods period;
+
+
     public Record() {}
 
-    public Record(boolean type, long userId, IncomeType income, float amount) {
-        this.type = type;
+    public Record(long userId, IncomeType income, float amount, TimePeriods period) {
         this.userId = userId;
         this.income = income;
         this.amount = amount;
+        this.period = period;
     }
 
-    public Record(boolean type, long userId, ChargeType charge, float amount) {
-        this.type = type;
+    public Record(long userId, ChargeType charge, float amount, TimePeriods period) {
         this.userId = userId;
         this.charge = charge;
         this.amount = amount;
+        this.period = period;
     }
 
-    public Record(long id, boolean type, long userId, IncomeType income, ChargeType charge, float amount) {
+    public Record(long id, long userId,
+                  IncomeType income, ChargeType charge, float amount, TimePeriods period) {
         this.id = id;
-        this.type = type;
         this.userId = userId;
         this.income = income;
         this.charge = charge;
         this.amount = amount;
+        this.period = period;
     }
 
     public long getId() {
@@ -59,14 +63,6 @@ public class Record {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public boolean isType() {
-        return type;
-    }
-
-    public void setType(boolean type) {
-        this.type = type;
     }
 
     public IncomeType getIncome() {
@@ -99,5 +95,13 @@ public class Record {
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public TimePeriods getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(TimePeriods period) {
+        this.period = period;
     }
 }
