@@ -9,6 +9,8 @@ import site.danielszczesny.backend.model.timofinance.TimePeriods;
 import site.danielszczesny.backend.model.timofinance.Record;
 import site.danielszczesny.backend.repository.RecordRepository;
 
+import java.util.Set;
+
 @Service
 public class RecordService {
 
@@ -31,6 +33,8 @@ public class RecordService {
 
     public void save(Account account, ChargeType chargeType, float amount, TimePeriods period) {
         Record recordToSave;
+
+        amount = amount - (2 * amount);
 
         recordToSave = new Record(account.getId(), chargeType, amount, period);
 
@@ -60,11 +64,23 @@ public class RecordService {
 
     public Account getAccountByUsername(String username) {
         if (accountService.usernameExist(username)) {
-            return accountService.getAccountByUsername(username);
+            Account account;
+            account = accountService.getAccountByUsername(username);
+            account.setRecords(accountService.getRecordsByUsername(username));
+
+            return account;
         } else {
             accountService.save(username);
             getAccountByUsername(username);
             return new Account();
         }
+    }
+
+    public Record getRecordById(long id) {
+        return recordRepository.getOne(id);
+    }
+
+    public Set<Record> getAllRecordsByUsername(String username) {
+        return recordRepository.getAllByUserId(accountService.getAccountByUsername(username).getId());
     }
 }

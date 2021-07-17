@@ -1,0 +1,40 @@
+.table-id {
+    width: 5%;
+}
+
+.table-amount {
+    width: 45%;
+}
+
+.table-time {
+    width: 20%;
+}
+
+.table-income {
+    width: 15%;
+}
+
+.table-charge {
+    width: 15%;
+}
+
+table, tr, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+table {
+    width: 75%;
+}
+
+td {
+    text-align: center;
+}
+
+#input-form {
+    margin-bottom: 10px;
+}
+
+
+
+

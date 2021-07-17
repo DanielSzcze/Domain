@@ -57,6 +57,12 @@ function createRecord(type, amount, time) {
         }),
         dataType : 'json',
         timeout : 100000,
-        contentType:'application/json'
+        contentType:'application/json',
+        success(url) {
+            if (url === 1) {
+                location.reload();
+            }
+        }
     })
 }
+

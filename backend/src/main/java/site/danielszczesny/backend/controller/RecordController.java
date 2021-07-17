@@ -14,6 +14,9 @@ import site.danielszczesny.backend.model.lolapp.Champions;
 import site.danielszczesny.backend.model.timofinance.*;
 import site.danielszczesny.backend.service.RecordService;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
@@ -46,9 +49,9 @@ public class RecordController {
     public ModelAndView getMappingUser(@PathVariable(name = "username") String username) {
         userExist(username);
         ModelAndView model = new ModelAndView("tf_overview");
-        Account account = recordService.getAccountByUsername(username);
-        Set<Record> records = account.getRecords();
-        model.addObject(records);
+        Set<Record> records = recordService.getAllRecordsByUsername(username);
+        model.addObject("records", records);
+        log.info(records.toString());
         return model;
     }
 
@@ -91,7 +94,8 @@ public class RecordController {
 
     @PostMapping(value = "/createRecord", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public void createRecord(@RequestBody String json) throws ParseException {
+    public int createRecord(@RequestBody String json, HttpServletResponse response)
+            throws ParseException, IOException, ServletException {
         JSONParser obj = new JSONParser(JSONParser.MODE_JSON_SIMPLE);
         JSONObject parse = (JSONObject) obj.parse(json);
         log.info(parse.toString());
@@ -99,7 +103,7 @@ public class RecordController {
         String time = (String) parse.get("time");
         String type = (String) parse.get("type");
         String username = (String) parse.get("username");
-        Type tempIncome = null;
+        Type tempIncome;
         try {
             tempIncome = IncomeType.valueOf(type);
             recordService.save(recordService.getAccountByUsername(username),
@@ -109,5 +113,6 @@ public class RecordController {
             recordService.save(recordService.getAccountByUsername(username),
                     (ChargeType) tempIncome, amount,TimePeriods.valueOf(time));
         }
+        return 1;
     }
 }
