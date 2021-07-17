@@ -1,5 +1,6 @@
 package site.danielszczesny.backend.controller;
 
+import com.sun.net.httpserver.Headers;
 import lombok.extern.java.Log;
 import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
@@ -19,6 +20,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -95,7 +98,7 @@ public class RecordController {
     @PostMapping(value = "/createRecord", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public int createRecord(@RequestBody String json, HttpServletResponse response)
-            throws ParseException, IOException, ServletException {
+            throws ParseException {
         JSONParser obj = new JSONParser(JSONParser.MODE_JSON_SIMPLE);
         JSONObject parse = (JSONObject) obj.parse(json);
         log.info(parse.toString());
@@ -114,5 +117,26 @@ public class RecordController {
                     (ChargeType) tempIncome, amount,TimePeriods.valueOf(time));
         }
         return 1;
+    }
+
+    @GetMapping(value = "/{username}/getRecords")
+    public String getRecords(@PathVariable("username") String username) throws ParseException {
+        Set<Record> records = recordService.getAllRecordsByUsername(username);
+
+        log.info("update - getRecords");
+
+        StringBuilder result = new StringBuilder();
+
+        result.append("[{");
+        for (Record r:records) {
+            result.append("\"id\":\"").append(r.getId()).append("\",")
+                    .append("\"userId\":\"").append(r.getUserId()).append("\",")
+                    .append("\"income\":\"").append(r.getIncome()).append("\",")
+                    .append("\"charge\":\"").append(r.getCharge()).append("\",")
+                    .append("\"amount\":\"").append(r.getAmount()).append("\",")
+                    .append("\"period\":\"").append(r.getPeriod()).append("\"},{");
+        }
+        result.replace(result.length() - 3, result.length(), "}]");
+        return result.toString();
     }
 }

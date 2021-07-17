@@ -104,4 +104,20 @@ public class Record {
     public void setPeriod(TimePeriods period) {
         this.period = period;
     }
+
+    @Override
+    public String toString() {
+        if (income == null) {
+            income = IncomeType.EMPTY;
+        } else {
+            charge = ChargeType.EMPTY;
+        }
+
+        return  "\"id\":\"" + id +
+                "\", \"userId\":\"" + userId +
+                "\", \"income\":\"" + income.getNumber() +
+                "\", \"charge\":\"" + charge.getNumber() +
+                "\", \"amount\":\"" + amount +
+                "\", \"period\":\"" + period.getNumber()  + "\"";
+    }
 }

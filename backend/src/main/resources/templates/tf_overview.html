@@ -5,7 +5,6 @@
     <title>TimoFinance Overview</title>
     <script src="/js/jquery-3.6.0.js" type="text/javascript"></script>
     <script src="http://localhost:35729/livereload.js"></script>
-    <link rel="stylesheet" href="/css/main.css" />
 </head>
     <body>
         <div id="input-form">
@@ -27,25 +26,17 @@
             </span>
         </div>
         <div id="records-table">
-            <table class="table">
+            <table id="table" class="table">
                 <tr>
-                    <td class="table-id">ID</td>
-                    <td class="table-time">Time</td>
-                    <td class="table-amount">Amount</td>
-                    <td class="table-income">Income</td>
-                    <td class="table-charge">Charge</td>
+                    <td class="table-header table-id">ID</td>
+                    <td class="table-header table-time">Time</td>
+                    <td class="table-header table-amount">Amount</td>
+                    <td class="table-header table-income">Income</td>
+                    <td class="table-header table-charge">Charge</td>
                 </tr>
-                <span th:each="record, index: ${records}">
-                    <tr>
-                        <td class="table-id" th:text="${record.id}"></td>
-                        <td class="table-time" th:text="${record.period}"></td>
-                        <td class="table-amount" th:text="${record.amount}"></td>
-                        <td class="table-income" th:text="${record.income}"></td>
-                        <td class="table-charge" th:text="${record.charge}"></td>
-                    </tr>
-                </span>
             </table>
         </div>
         <script src="/js/tf_main.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="/css/main.css" />
     </body>
 </html>

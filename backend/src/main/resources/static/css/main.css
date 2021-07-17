@@ -30,6 +30,22 @@ table {
 td {
     text-align: center;
 }
+td.table-amount-I {
+    background-color: greenyellow;
+}
+
+td.table-amount-C {
+    background-color: orangered;
+}
+
+.table-header.table-amount,
+.table-header.table-id,
+.table-header.table-charge,
+.table-header.table-income,
+.table-header.table-time{
+    background-color: cornflowerblue;
+    font-weight: bold;
+}
 
 #input-form {
     margin-bottom: 10px;
