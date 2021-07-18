@@ -54,7 +54,7 @@ public class RecordController {
         ModelAndView model = new ModelAndView("tf_overview");
         Set<Record> records = recordService.getAllRecordsByUsername(username);
         model.addObject("records", records);
-        log.info(records.toString());
+//        log.info(records.toString());
         return model;
     }
 
@@ -64,7 +64,7 @@ public class RecordController {
 
     @GetMapping("/getIncomeTypes")
     public String getTypes() {
-        log.info("getIncomeTypes");
+//        log.info("getIncomeTypes");
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append("{\"IncomeTypes\": [");
@@ -101,7 +101,7 @@ public class RecordController {
             throws ParseException {
         JSONParser obj = new JSONParser(JSONParser.MODE_JSON_SIMPLE);
         JSONObject parse = (JSONObject) obj.parse(json);
-        log.info(parse.toString());
+//        log.info(parse.toString());
         float amount = Float.parseFloat((String) parse.get("amount"));
         String time = (String) parse.get("time");
         String type = (String) parse.get("type");
@@ -123,7 +123,7 @@ public class RecordController {
     public String getRecords(@PathVariable("username") String username) throws ParseException {
         Set<Record> records = recordService.getAllRecordsByUsername(username);
 
-        log.info("update - getRecords");
+//        log.info("update - getRecords");
 
         StringBuilder result = new StringBuilder();
 

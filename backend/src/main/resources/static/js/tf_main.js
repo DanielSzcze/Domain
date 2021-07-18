@@ -4,6 +4,8 @@ username = username.substr(number);
 
 let typeValues;
 
+update();
+
 $.ajax({
     type : "GET",
     url : '/tf/getIncomeTypes',
