@@ -1,6 +1,5 @@
 package site.danielszczesny.backend.controller;
 
-import com.sun.net.httpserver.Headers;
 import lombok.extern.java.Log;
 import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
@@ -10,21 +9,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import site.danielszczesny.backend.model.Account;
-import site.danielszczesny.backend.model.lolapp.Champions;
 import site.danielszczesny.backend.model.timofinance.*;
 import site.danielszczesny.backend.service.RecordService;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
 import java.util.Set;
-import java.util.function.Predicate;
 
 @Log
 @RestController
@@ -62,7 +52,8 @@ public class RecordController {
         return recordService.getAccountByUsername(username) != null;
     }
 
-    @GetMapping("/getIncomeTypes")
+    @GetMapping(value = "/getIncomeTypes")
+    @ResponseStatus(HttpStatus.OK)
     public String getTypes() {
 //        log.info("getIncomeTypes");
         StringBuilder stringBuilder = new StringBuilder();
