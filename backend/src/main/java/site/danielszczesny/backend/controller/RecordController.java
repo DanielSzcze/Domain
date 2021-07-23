@@ -88,7 +88,7 @@ public class RecordController {
 
     @PostMapping(value = "/createRecord", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public int createRecord(@RequestBody String json, HttpServletResponse response)
+    public int createRecord(@RequestBody String json)
             throws ParseException {
         JSONParser obj = new JSONParser(JSONParser.MODE_JSON_SIMPLE);
         JSONObject parse = (JSONObject) obj.parse(json);
@@ -98,6 +98,7 @@ public class RecordController {
         String type = (String) parse.get("type");
         String username = (String) parse.get("username");
         Type tempIncome;
+        userExist(username);
         try {
             tempIncome = IncomeType.valueOf(type);
             recordService.save(recordService.getAccountByUsername(username),
@@ -112,6 +113,7 @@ public class RecordController {
 
     @GetMapping(value = "/{username}/getRecords")
     public String getRecords(@PathVariable("username") String username) throws ParseException {
+        userExist(username);
         Set<Record> records = recordService.getAllRecordsByUsername(username);
 
 //        log.info("update - getRecords");
@@ -127,7 +129,11 @@ public class RecordController {
                     .append("\"amount\":\"").append(r.getAmount()).append("\",")
                     .append("\"period\":\"").append(r.getPeriod()).append("\"},{");
         }
-        result.replace(result.length() - 3, result.length(), "}]");
+        if (!(result.length() == 2)) {
+            result.replace(result.length() - 3, result.length(), "}]");
+        } else {
+            result.append("}]");
+        }
         return result.toString();
     }
 }
