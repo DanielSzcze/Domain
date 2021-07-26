@@ -9,6 +9,8 @@ import site.danielszczesny.backend.model.timofinance.TimePeriods;
 import site.danielszczesny.backend.model.timofinance.Record;
 import site.danielszczesny.backend.repository.RecordRepository;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Service
@@ -26,7 +28,7 @@ public class RecordService {
     public void save(Account account, IncomeType incomeType, float amount, TimePeriods period) {
         Record recordToSave;
 
-        recordToSave = new Record(account.getId(), incomeType, amount, period);
+        recordToSave = new Record(account.getId(), incomeType, amount, period, Date.valueOf(LocalDate.now()));
 
         recordRepository.save(recordToSave);
     }
@@ -36,7 +38,7 @@ public class RecordService {
 
         amount = amount - (2 * amount);
 
-        recordToSave = new Record(account.getId(), chargeType, amount, period);
+        recordToSave = new Record(account.getId(), chargeType, amount, period, Date.valueOf(LocalDate.now()));
 
         recordRepository.save(recordToSave);
     }

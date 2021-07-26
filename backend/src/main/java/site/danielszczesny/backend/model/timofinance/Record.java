@@ -3,6 +3,7 @@ package site.danielszczesny.backend.model.timofinance;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @Component
 @Entity
@@ -29,31 +30,38 @@ public class Record {
     @Column(nullable = false)
     private TimePeriods period;
 
+    @Column(nullable = false)
+    private Date date;
+
 
     public Record() {}
 
-    public Record(long userId, IncomeType income, float amount, TimePeriods period) {
+    public Record(long userId, IncomeType income, float amount, TimePeriods period, Date date) {
         this.userId = userId;
         this.income = income;
         this.amount = amount;
         this.period = period;
+        this.date = date;
     }
 
-    public Record(long userId, ChargeType charge, float amount, TimePeriods period) {
+    public Record(long userId, ChargeType charge, float amount, TimePeriods period, Date date) {
         this.userId = userId;
         this.charge = charge;
         this.amount = amount;
         this.period = period;
+        this.date = date;
     }
 
     public Record(long id, long userId,
-                  IncomeType income, ChargeType charge, float amount, TimePeriods period) {
+                  IncomeType income,
+                  ChargeType charge, float amount, TimePeriods period, Date date) {
         this.id = id;
         this.userId = userId;
         this.income = income;
         this.charge = charge;
         this.amount = amount;
         this.period = period;
+        this.date = date;
     }
 
     public long getId() {
@@ -104,6 +112,14 @@ public class Record {
         this.period = period;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     @Override
     public String toString() {
         if (income == null) {
@@ -117,6 +133,7 @@ public class Record {
                 "\", \"income\":\"" + income.getNumber() +
                 "\", \"charge\":\"" + charge.getNumber() +
                 "\", \"amount\":\"" + amount +
+                "\", \"date\":\"" + date +
                 "\", \"period\":\"" + period.getNumber()  + "\"";
     }
 }
