@@ -5,6 +5,7 @@ import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
 import net.minidev.json.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,10 @@ import java.util.Set;
 @RequestMapping("/tf")
 public class RecordController {
 
-    private RecordService recordService;
+    private final RecordService recordService;
+
+    @Value("${spring.profiles.active}")
+    private String activeProfile;
 
     @Autowired
     public RecordController(RecordService recordService) {
@@ -44,18 +48,23 @@ public class RecordController {
         ModelAndView model = new ModelAndView("tf_overview");
         Set<Record> records = recordService.getAllRecordsByUsername(username);
         model.addObject("records", records);
-//        log.info(records.toString());
+        if (activeProfile.equals("dev")) {
+            log.info("GetMapping - /" + username + " - " + records.toString());
+        }
         return model;
     }
 
-    private boolean userExist(String username) {
-        return recordService.getAccountByUsername(username) != null;
+    private void userExist(String username) {
+        recordService.getAccountByUsername(username);
     }
 
     @GetMapping(value = "/getIncomeTypes")
     @ResponseStatus(HttpStatus.OK)
     public String getTypes() {
-//        log.info("getIncomeTypes");
+        if (activeProfile.equals("dev")) {
+            log.info("getIncomeTypes");
+        }
+
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append("{\"IncomeTypes\": [");
@@ -92,7 +101,9 @@ public class RecordController {
             throws ParseException {
         JSONParser obj = new JSONParser(JSONParser.MODE_JSON_SIMPLE);
         JSONObject parse = (JSONObject) obj.parse(json);
-//        log.info(parse.toString());
+        if (activeProfile.equals("dev")) {
+            log.info("createRecord - " + parse.toString());
+        }
         float amount = Float.parseFloat((String) parse.get("amount"));
         String time = (String) parse.get("time");
         String type = (String) parse.get("type");
@@ -115,9 +126,9 @@ public class RecordController {
     public String getRecords(@PathVariable("username") String username) throws ParseException {
         userExist(username);
         Set<Record> records = recordService.getAllRecordsByUsername(username);
-
-//        log.info("update - getRecords");
-
+        if (activeProfile.equals("dev")) {
+            log.info("update - getRecords");
+        }
         StringBuilder result = new StringBuilder();
 
         result.append("[{");

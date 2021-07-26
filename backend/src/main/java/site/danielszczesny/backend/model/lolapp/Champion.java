@@ -1,9 +1,12 @@
 package site.danielszczesny.backend.model.lolapp;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Component
 public class Champion {
 
     private String name;

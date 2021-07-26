@@ -1,7 +1,6 @@
 package site.danielszczesny.backend.model.timofinance;
 
 import org.springframework.stereotype.Component;
-import site.danielszczesny.backend.model.Account;
 
 import javax.persistence.*;
 
