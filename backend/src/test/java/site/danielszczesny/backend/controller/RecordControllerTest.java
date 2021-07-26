@@ -1,4 +1,4 @@
-package site.danielszczesny.backend.backend;
+package site.danielszczesny.backend.controller;
 
 import org.aspectj.lang.annotation.After;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.nio.charset.Charset;
 
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -72,7 +71,7 @@ public class RecordControllerTest {
 
     @ParameterizedTest
     @After("testCreateRecord")
-    @ValueSource(strings = {"test", "test123", "test321"})
+    @ValueSource(strings = {"test", "test123", "test321t"})
     public void testGetRecords(String username) throws Exception {
         mockMvc.perform(get("/tf/" + username + "/getRecords"))
                 .andExpect(content().string(notNullValue()))

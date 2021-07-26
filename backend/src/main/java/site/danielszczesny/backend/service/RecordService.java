@@ -14,8 +14,8 @@ import java.util.Set;
 @Service
 public class RecordService {
 
-    private RecordRepository recordRepository;
-    private AccountService accountService;
+    private final RecordRepository recordRepository;
+    private final AccountService accountService;
 
     @Autowired
     public RecordService(RecordRepository recordRepository, AccountService accountService) {
