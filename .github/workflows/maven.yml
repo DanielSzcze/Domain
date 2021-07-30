@@ -20,6 +20,5 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
-        build-args: PROFILE=dev 
     - name: Build with Maven
-      run:  mvn -B package --file backend/pom.xml
+      run:  mvn -B package -Pdev --file backend/pom.xml
